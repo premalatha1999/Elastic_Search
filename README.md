@@ -143,3 +143,5 @@ return array(
 
     'default_index' => 'my_custom_index_name',
 );
+
+/***** End Elasticsearch Configuration *****/
