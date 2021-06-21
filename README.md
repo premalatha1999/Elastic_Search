@@ -1,78 +1,145 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+Elastic Seatch Installation
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+/***** Elastic Seatch Installation *****/
 
-## About Laravel
+Step 1:
+In this step, we are going to Install Elasticsearch. In order to install it, we will use our local machine. We can easily install it into our system by using the following link:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1) Step 1 — Installing Java :
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-Before installing OpenJDK with APT, update the list of available packages for installation on your Ubuntu Droplet by running the command:
+$ sudo apt-get update
 
-## Learning Laravel
+-After that, you can install OpenJDK with the command:
+$ sudo apt-get install openjdk-7-jre
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+-To verify your JRE is installed and can be used, run the command:
+java -version
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+2) Step 2 — Downloading and Installing Elasticsearch :
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+$ wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.2.deb
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
+-Then install it in the usual Ubuntu way with the dpkg command like this:
+$ sudo dpkg -i elasticsearch-1.7.2.deb
 
-## Contributing
+-To make sure Elasticsearch starts and stops automatically with the Droplet, add its init script to the default runlevels with the command:
+$ sudo update-rc.d elasticsearch defaults
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
+3) Step 3 — Configuring Elastic :
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+-To start editing the main elasticsearch.yml configuration file:
+$ sudo nano /etc/elasticsearch/elasticsearch.yml
 
-## Security Vulnerabilities
+1 . Remove the # character at the beginning of the lines for node.name and cluster.name to uncomment them, and then change their values.
+2 . node.name: "My First Node"
+3 . cluster.name: mycluster1
+4 . Once you make all the changes, please save and exit the file. Now you can start Elasticsearch for the first time with the command:
+$ sudo service elasticsearch start
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+Step 4 — Securing Elastic :
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+-Elasticsearch has no built-in security and can be controlled by anyone who can access the HTTP API. So, the first security tweak is to prevent public access. To remove public access edit the file elasticsearch.yml:
+$ sudo nano /etc/elasticsearch/elasticsearch.yml
+-Find the line that contains network.bind_host, uncomment it by removing the # character at the beginning of the line, and change the value to localhost so it looks like this:
+network.bind_host: localhost
+
+
+Step 5 — Testing :
+
+$ curl -X GET 'http://localhost:9200' or run http://localhost:9200 in any browser.
+You should see the response like following:
+{
+“status”:200,
+“name”:”Harry Leland”,
+“cluster_name”:”elasticsearch”,
+"version" : {
+“number”:”1.7.2”,
+“build_hash”:”e43676b1385b8125d647f593f7202acbd816e8ec”,
+"build_timestamp" : "2015-09-14T09:49:53Z",
+"build_snapshot" : false,
+"lucene_version" : "4.10.4"
+},
+"tagline" : "You Know, for Search"  
+}
+
+
+/***** End Elastic Seatch Installation *****/
+
+Elasticquent Installation
+
+/***** Elasticquent Installation *****/
+
+->How Elasticquent Works
+When using a database, Eloquent models are populated from data read from a database table. With Elasticquent, models are populated by data indexed in Elasticsearch. The whole idea behind using Elasticsearch for search is that its fast and light, so you model functionality will be dictated by what data has been indexed for your document.
+
+->Before you start using Elasticquent, make sure you've installed Elasticsearch.
+
+->To get started, add Elasticquent to you composer.json file:
+"elasticquent/elasticquent": "dev-master"
+
+->Once you've run a composer update, you need to register Laravel service provider, in your config/app.php:
+'providers' => [
+...
+Elasticquent\ElasticquentServiceProvider::class,
+],
+
+->We also provide a facade for elasticsearch-php client (which has connected using our settings), add following to your config/app.php if you need so.
+'aliases' => [
+...
+'Es' => Elasticquent\ElasticquentElasticsearchFacade::class,
+],
+
+->Then add the Elasticquent trait to any Eloquent model that you want to be able to index in Elasticsearch:
+use Elasticquent\ElasticquentTrait;
+
+class Book extends Eloquent
+{
+    use ElasticquentTrait;
+}
+
+->Now your Eloquent model has some extra methods that make it easier to index your model's data using Elasticsearch.
+
+/***** End Elasticquent Installation *****/
+
+
+Elasticsearch Configuration
+
+/***** Elasticsearch Configuration *****/
+
+->By default, Elasticquent will connect to localhost:9200 and use default as index name, you can change this and the other settings in the configuration file. You can add the elasticquent.php config file at /app/config/elasticquent.php for Laravel 4, or use the following Artisan command to publish the configuration file into your config directory:
+$ php artisan vendor:publish --provider="Elasticquent\ElasticquentServiceProvider"
+
+<?php
+return array(
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Elasticsearch Client Configuration
+    |--------------------------------------------------------------------------
+    |
+    | This array will be passed to the Elasticsearch client.
+    | See configuration options here:
+    |
+    | http://www.elasticsearch.org/guide/en/elasticsearch/client/php-api/current/_configuration.html
+    */
+
+    'config' => [
+        'hosts'     => ['localhost:9200'],
+        'retries'   => 1,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default Index Name
+    |--------------------------------------------------------------------------
+    |
+    | This is the index name that Elastiquent will use for all
+    | Elastiquent models.
+    */
+
+    'default_index' => 'my_custom_index_name',
+);
