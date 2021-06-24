@@ -161,19 +161,19 @@ return array(
 
 /**** Indexing ****/
 
-1 . For add single instance in index
+1 . For add single instance in index - 
 
 addToIndex()
 
-2 . For add all instance in index
+2 . For add all instance in index - 
 
 addAllToIndex()
 
-3 . For reindex
+3 . For reindex - 
 
 reindex()
 
-4 . For remove index
+4 . For remove index - 
 
 removeFromIndex()
 
@@ -182,15 +182,15 @@ removeFromIndex()
 
 /**** Searching ****/
 
-1 . Simple term search
+1 . Simple term search - 
 
 search()
 
-2 . Query Based Search
+2 . Query Based Search - 
 
 searchByQuery()
 
-3 . Raw queries
+3 . Raw queries - 
 
 complexSearch()
 
