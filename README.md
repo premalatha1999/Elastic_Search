@@ -55,16 +55,27 @@ $ curl -X GET 'http://localhost:9200' or run http://localhost:9200 in any browse
 You should see the response like following:
 {
 “status”:200,
+
 “name”:”Harry Leland”,
+
 “cluster_name”:”elasticsearch”,
+
 "version" : {
+
 “number”:”1.7.2”,
+
 “build_hash”:”e43676b1385b8125d647f593f7202acbd816e8ec”,
+
 "build_timestamp" : "2015-09-14T09:49:53Z",
+
 "build_snapshot" : false,
+
 "lucene_version" : "4.10.4"
+
 },
-"tagline" : "You Know, for Search"  
+
+"tagline" : "You Know, for Search"
+
 }
 
 
@@ -73,6 +84,8 @@ You should see the response like following:
 Elasticquent Installation
 
 /***** Elasticquent Installation *****/
+
+
 
 ->How Elasticquent Works
 When using a database, Eloquent models are populated from data read from a database table. With Elasticquent, models are populated by data indexed in Elasticsearch. The whole idea behind using Elasticsearch for search is that its fast and light, so you model functionality will be dictated by what data has been indexed for your document.
@@ -107,9 +120,9 @@ class Book extends Eloquent
 /***** End Elasticquent Installation *****/
 
 
-Elasticsearch Configuration
+Elasticquent Configuration
 
-/***** Elasticsearch Configuration *****/
+/***** Elasticquent Configuration *****/
 
 ->By default, Elasticquent will connect to localhost:9200 and use default as index name, you can change this and the other settings in the configuration file. You can add the elasticquent.php config file at /app/config/elasticquent.php for Laravel 4, or use the following Artisan command to publish the configuration file into your config directory:
 $ php artisan vendor:publish --provider="Elasticquent\ElasticquentServiceProvider"
@@ -144,4 +157,41 @@ return array(
     'default_index' => 'my_custom_index_name',
 );
 
-/***** End Elasticsearch Configuration *****/
+/***** End Elasticquent Configuration *****/
+
+/**** Indexing ****/
+
+1 . For add single instance in index
+
+addToIndex()
+
+2 . For add all instance in index
+
+addAllToIndex()
+
+3 . For reindex
+
+reindex()
+
+4 . For remove index
+
+removeFromIndex()
+
+/**** End Indexing ****/
+
+
+/**** Searching ****/
+
+1 . Simple term search
+
+search()
+
+2 . Query Based Search
+
+searchByQuery()
+
+3 . Raw queries
+
+complexSearch()
+
+/**** End Searching ****/
